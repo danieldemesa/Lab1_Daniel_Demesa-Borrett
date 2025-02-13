@@ -84,8 +84,13 @@ struct ContentView: View {
 
     func resetNumber() {
         number = Int.random(in: 1...100)
-        timer?.invalidate()
+        stopTimer()
         startTimer()
+    }
+
+    func stopTimer() {
+        timer?.invalidate()
+        timer = nil
     }
 
     func startTimer() {

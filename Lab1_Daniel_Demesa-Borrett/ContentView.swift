@@ -23,19 +23,24 @@ struct ContentView: View {
                 .padding()
             
             HStack {
-                Button("Prime") { checkAnswer(isPrime: true) }
-                    .frame(width: 150, height: 50)
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-                    .scaleEffect(isCorrect != nil ? 1.1 : 1.0)  // Add scale effect when selected
-                
-                Button("Not Prime") { checkAnswer(isPrime: false) }
-                    .frame(width: 150, height: 50)
-                    .background(Color.red)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-                    .scaleEffect(isCorrect != nil ? 1.1 : 1.0)  // Add scale effect when selected
+                Button("Prime") {
+                    checkAnswer(isPrime: true)
+                }
+                .frame(width: 150, height: 50)
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(10)
+                .scaleEffect(isCorrect != nil ? 1.2 : 1)  // Added scale effect when selected
+
+                Button("Not Prime") {
+                    checkAnswer(isPrime: false)
+                }
+                .frame(width: 150, height: 50)
+                .background(Color.red)
+                .foregroundColor(.white)
+                .cornerRadius(10)
+                .scaleEffect(isCorrect != nil ? 1.2 : 1)  // Added scale effect when selected
+
             }
             .font(.title)
             .padding()

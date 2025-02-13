@@ -28,20 +28,22 @@ struct ContentView: View {
                     .background(Color.blue)
                     .foregroundColor(.white)
                     .cornerRadius(10)
+                    .scaleEffect(isCorrect != nil ? 1.1 : 1.0)  // Add scale effect when selected
                 
                 Button("Not Prime") { checkAnswer(isPrime: false) }
                     .frame(width: 150, height: 50)
                     .background(Color.red)
                     .foregroundColor(.white)
                     .cornerRadius(10)
+                    .scaleEffect(isCorrect != nil ? 1.1 : 1.0)  // Add scale effect when selected
             }
             .font(.title)
             .padding()
             
             if let isCorrect = isCorrect {
-                Text(isCorrect ? "✅ Correct" : "❌ Wrong")
+                Image(systemName: isCorrect ? "checkmark.circle.fill" : "x.circle.fill")
                     .foregroundColor(isCorrect ? .green : .red)
-                    .font(.title)
+                    .font(.system(size: 50))
             }
         }
         .onAppear {

@@ -19,7 +19,8 @@ struct ContentView: View {
     var body: some View {
         VStack(spacing: 20) {
             Text("\(number)")
-                .font(.system(size: 80, weight: .bold))
+                .font(.custom("Helvetica Neue", size: 80))
+                .fontWeight(.bold)
                 .padding()
             
             HStack {
@@ -30,7 +31,7 @@ struct ContentView: View {
                 .background(isCorrect == true ? Color.green : Color.blue)
                 .foregroundColor(.white)
                 .cornerRadius(25)
-                .shadow(radius: 10) 
+                .shadow(radius: 10)
 
                 Button("Not Prime") {
                     evaluateAnswer(isPrime: false)

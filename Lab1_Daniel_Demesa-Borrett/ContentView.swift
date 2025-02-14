@@ -62,9 +62,9 @@ struct ContentView: View {
 
     func checkAnswer(isPrime: Bool) {
         let primeStatus = isPrimeNumber(number)
-        isCorrect = primeStatus == isPrime
+        isCorrect = (primeStatus == isPrime)
 
-        if isCorrect! {
+        if isCorrect == true {
             correctAnswers += 1
         } else {
             wrongAnswers += 1
@@ -80,22 +80,20 @@ struct ContentView: View {
 
     func isPrimeNumber(_ num: Int) -> Bool {
         if num < 2 { return false }
-        if num == 2 || num == 3 { return true }
-        if num % 2 == 0 { return false }
-
-        let limit = Int(Double(num).squareRoot())
-        for i in stride(from: 3, through: limit, by: 2) {
-            if num % i == 0 {
-                return false
-            }
+        for i in 2..<num where num % i == 0 {
+            return false
         }
         return true
     }
 
     func resetNumber() {
         number = Int.random(in: 1...100)
-        stopTimer()
-        startTimer()
+        
+        // Restart timer only if it exists
+        if timer != nil {
+            stopTimer()
+            startTimer()
+        }
     }
 
     func stopTimer() {

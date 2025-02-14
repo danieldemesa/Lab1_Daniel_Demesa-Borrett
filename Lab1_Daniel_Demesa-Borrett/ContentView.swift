@@ -24,7 +24,7 @@ struct ContentView: View {
             
             HStack {
                 Button("Prime") {
-                    checkAnswer(isPrime: true)
+                    evaluateAnswer(isPrime: true)
                 }
                 .frame(width: 150, height: 50)
                 .background(isCorrect == true ? Color.green : Color.blue)
@@ -32,7 +32,7 @@ struct ContentView: View {
                 .cornerRadius(10)
 
                 Button("Not Prime") {
-                    checkAnswer(isPrime: false)
+                    evaluateAnswer(isPrime: false)
                 }
                 .frame(width: 150, height: 50)
                 .background(isCorrect == false ? Color.orange : Color.red)
@@ -60,9 +60,8 @@ struct ContentView: View {
         }
     }
 
-    func checkAnswer(isPrime: Bool) {
-        let primeStatus = isPrimeNumber(number)
-        isCorrect = (primeStatus == isPrime)
+    func evaluateAnswer(isPrime: Bool) {
+        isCorrect = isPrimeNumber(number) == isPrime
 
         if isCorrect == true {
             correctAnswers += 1

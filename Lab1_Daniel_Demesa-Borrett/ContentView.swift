@@ -17,48 +17,36 @@ struct ContentView: View {
     @State private var timer: Timer?
 
     var body: some View {
-        ZStack {
-            // Background gradient
-            LinearGradient(
-                gradient: Gradient(colors: [Color.blue.opacity(0.6), Color.purple.opacity(0.8)]),
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea()
-
-            VStack(spacing: 30) { // Increased spacing for better layout
-                Text("\(number)")
-                    .font(.system(size: 80, weight: .bold))
-                    .foregroundColor(.white) // Make text stand out
-                    .padding(.vertical, 20)
-                
-                HStack(spacing: 20) { // Increased spacing between buttons
-                    Button("Prime") {
-                        checkAnswer(isPrime: true)
-                    }
-                    .frame(width: 150, height: 50)
-                    .background(isCorrect == true ? Color.green : Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-
-                    Button("Not Prime") {
-                        checkAnswer(isPrime: false)
-                    }
-                    .frame(width: 150, height: 50)
-                    .background(isCorrect == false ? Color.orange : Color.red)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-                }
-                .font(.title)
+        VStack(spacing: 20) {
+            Text("\(number)")
+                .font(.system(size: 80, weight: .bold))
                 .padding()
-                
-                if let isCorrect = isCorrect {
-                    Image(systemName: isCorrect ? "checkmark.circle.fill" : "x.circle.fill")
-                        .foregroundColor(isCorrect ? .green : .red)
-                        .font(.system(size: 50))
+            
+            HStack {
+                Button("Prime") {
+                    checkAnswer(isPrime: true)
                 }
+                .frame(width: 150, height: 50)
+                .background(isCorrect == true ? Color.green : Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(10)
+
+                Button("Not Prime") {
+                    checkAnswer(isPrime: false)
+                }
+                .frame(width: 150, height: 50)
+                .background(isCorrect == false ? Color.orange : Color.red)
+                .foregroundColor(.white)
+                .cornerRadius(10)
             }
+            .font(.title)
             .padding()
+            
+            if let isCorrect = isCorrect {
+                Image(systemName: isCorrect ? "checkmark.circle.fill" : "x.circle.fill")
+                    .foregroundColor(isCorrect ? .green : .red)
+                    .font(.system(size: 50))
+            }
         }
         .onAppear {
             startTimer()
@@ -90,10 +78,17 @@ struct ContentView: View {
         resetNumber()
     }
 
+    // Optimized prime number check function
     func isPrimeNumber(_ num: Int) -> Bool {
         if num < 2 { return false }
-        for i in 2..<num where num % i == 0 {
-            return false
+        if num == 2 || num == 3 { return true }
+        if num % 2 == 0 { return false }
+
+        let limit = Int(Double(num).squareRoot())
+        for i in stride(from: 3, through: limit, by: 2) {
+            if num % i == 0 {
+                return false
+            }
         }
         return true
     }

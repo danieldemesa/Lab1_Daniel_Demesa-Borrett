@@ -56,6 +56,9 @@ struct ContentView: View {
         }
         .alert("Results", isPresented: $showDialog) {
             Button("OK") {
+            
+                correctAnswers = 0
+                wrongAnswers = 0
                 attempts = 0
             }
         } message: {
@@ -108,7 +111,6 @@ struct ContentView: View {
     }
 }
 
-// Preview for SwiftUI
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()

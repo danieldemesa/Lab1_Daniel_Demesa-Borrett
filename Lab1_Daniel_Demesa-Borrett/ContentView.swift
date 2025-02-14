@@ -29,7 +29,8 @@ struct ContentView: View {
                 .frame(width: 150, height: 50)
                 .background(isCorrect == true ? Color.green : Color.blue)
                 .foregroundColor(.white)
-                .cornerRadius(25) // Rounded corners for the buttons
+                .cornerRadius(25)
+                .shadow(radius: 10) 
 
                 Button("Not Prime") {
                     evaluateAnswer(isPrime: false)
@@ -37,7 +38,8 @@ struct ContentView: View {
                 .frame(width: 150, height: 50)
                 .background(isCorrect == false ? Color.orange : Color.red)
                 .foregroundColor(.white)
-                .cornerRadius(25) // Rounded corners for the buttons
+                .cornerRadius(25)
+                .shadow(radius: 10)
             }
             .font(.title)
             .padding()

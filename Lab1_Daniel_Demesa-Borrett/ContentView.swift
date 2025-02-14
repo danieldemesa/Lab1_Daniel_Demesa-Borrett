@@ -80,8 +80,13 @@ struct ContentView: View {
 
     func isPrimeNumber(_ num: Int) -> Bool {
         if num < 2 { return false }
-        for i in 2..<num where num % i == 0 {
-            return false
+        if num == 2 || num == 3 { return true }
+        if num % 2 == 0 { return false }
+        
+        for i in stride(from: 3, through: Int(Double(num).squareRoot()), by: 2) {
+            if num % i == 0 {
+                return false
+            }
         }
         return true
     }
@@ -89,7 +94,6 @@ struct ContentView: View {
     func resetNumber() {
         number = Int.random(in: 1...100)
         
-        // Restart timer only if it exists
         if timer != nil {
             stopTimer()
             startTimer()

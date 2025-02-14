@@ -62,9 +62,9 @@ struct ContentView: View {
 
     func checkAnswer(isPrime: Bool) {
         let primeStatus = isPrimeNumber(number)
-        isCorrect = (primeStatus == isPrime)
+        isCorrect = primeStatus == isPrime
 
-        if isCorrect == true {
+        if isCorrect! {
             correctAnswers += 1
         } else {
             wrongAnswers += 1
@@ -78,7 +78,6 @@ struct ContentView: View {
         resetNumber()
     }
 
-    // Optimized prime number check function
     func isPrimeNumber(_ num: Int) -> Bool {
         if num < 2 { return false }
         if num == 2 || num == 3 { return true }

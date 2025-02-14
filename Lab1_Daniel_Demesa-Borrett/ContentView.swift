@@ -92,19 +92,11 @@ struct ContentView: View {
 
     func resetNumber() {
         number = Int.random(in: 1...100)
-        
-        if timer != nil {
-            stopTimer()
-            startTimer()
-        }
-    }
-
-    func stopTimer() {
-        timer?.invalidate()
-        timer = nil
+        startTimer()  // Restart timer each time a number resets
     }
 
     func startTimer() {
+        timer?.invalidate()  // Stop any previous timer before starting a new one
         timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { _ in
             wrongAnswers += 1
             isCorrect = false

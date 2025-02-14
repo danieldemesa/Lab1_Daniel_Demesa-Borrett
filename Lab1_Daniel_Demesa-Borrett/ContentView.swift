@@ -8,63 +8,70 @@
 import SwiftUI
 
 struct ContentView: View {
-    // State variables for game logic
-    @State private var number = Int.random(in: 1...100)  // Random number to check
-    @State private var correctAnswers = 0  // Count of correct guesses
-    @State private var wrongAnswers = 0  // Count of wrong guesses
-    @State private var attempts = 0  // Total attempts
-    @State private var isCorrect: Bool?  // Stores whether the last answer was correct
-    @State private var showDialog = false  // Controls when results pop up
-    @State private var timer: Timer?  // Timer for auto-reset
+    @State private var number = Int.random(in: 1...100)
+    @State private var correctAnswers = 0
+    @State private var wrongAnswers = 0
+    @State private var attempts = 0
+    @State private var isCorrect: Bool?
+    @State private var showDialog = false
+    @State private var timer: Timer?
 
     var body: some View {
-        VStack(spacing: 20) {
-            // Display the number to check
-            Text("\(number)")
-                .font(.system(size: 80, weight: .bold))
-                .padding()
-            
-            // Buttons for Prime and Not Prime selection
-            HStack {
-                Button("Prime") {
-                    checkAnswer(isPrime: true)
-                }
-                .frame(width: 150, height: 50)
-                .background(isCorrect == true ? Color.green : Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(10)
+        ZStack {
+            // Background gradient
+            LinearGradient(
+                gradient: Gradient(colors: [Color.blue.opacity(0.6), Color.purple.opacity(0.8)]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            .ignoresSafeArea()
 
-                Button("Not Prime") {
-                    checkAnswer(isPrime: false)
+            VStack(spacing: 30) { // Increased spacing for better layout
+                Text("\(number)")
+                    .font(.system(size: 80, weight: .bold))
+                    .foregroundColor(.white) // Make text stand out
+                    .padding(.vertical, 20)
+                
+                HStack(spacing: 20) { // Increased spacing between buttons
+                    Button("Prime") {
+                        checkAnswer(isPrime: true)
+                    }
+                    .frame(width: 150, height: 50)
+                    .background(isCorrect == true ? Color.green : Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+
+                    Button("Not Prime") {
+                        checkAnswer(isPrime: false)
+                    }
+                    .frame(width: 150, height: 50)
+                    .background(isCorrect == false ? Color.orange : Color.red)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
                 }
-                .frame(width: 150, height: 50)
-                .background(isCorrect == false ? Color.orange : Color.red)
-                .foregroundColor(.white)
-                .cornerRadius(10)
+                .font(.title)
+                .padding()
+                
+                if let isCorrect = isCorrect {
+                    Image(systemName: isCorrect ? "checkmark.circle.fill" : "x.circle.fill")
+                        .foregroundColor(isCorrect ? .green : .red)
+                        .font(.system(size: 50))
+                }
             }
-            .font(.title)
             .padding()
-            
-            // Display feedback icon based on correctness
-            if let isCorrect = isCorrect {
-                Image(systemName: isCorrect ? "checkmark.circle.fill" : "x.circle.fill")
-                    .foregroundColor(isCorrect ? .green : .red)
-                    .font(.system(size: 50))
-            }
         }
         .onAppear {
-            startTimer()  // Start the countdown timer
+            startTimer()
         }
         .alert("Results", isPresented: $showDialog) {
             Button("OK") {
-                attempts = 0  // Reset attempts
+                attempts = 0
             }
         } message: {
             Text("Correct: \(correctAnswers)\nWrong: \(wrongAnswers)")
         }
     }
 
-    // Function to check if the user's guess is correct
     func checkAnswer(isPrime: Bool) {
         let primeStatus = isPrimeNumber(number)
         isCorrect = (primeStatus == isPrime)
@@ -83,7 +90,6 @@ struct ContentView: View {
         resetNumber()
     }
 
-    // Function to determine if a number is prime
     func isPrimeNumber(_ num: Int) -> Bool {
         if num < 2 { return false }
         for i in 2..<num where num % i == 0 {
@@ -92,20 +98,17 @@ struct ContentView: View {
         return true
     }
 
-    // Function to reset the game with a new number
     func resetNumber() {
         number = Int.random(in: 1...100)
         stopTimer()
         startTimer()
     }
 
-    // Function to stop the timer
     func stopTimer() {
         timer?.invalidate()
         timer = nil
     }
 
-    // Function to start the timer (resets every 5 seconds)
     func startTimer() {
         timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { _ in
             wrongAnswers += 1

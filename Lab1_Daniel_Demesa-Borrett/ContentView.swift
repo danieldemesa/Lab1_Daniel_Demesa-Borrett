@@ -18,12 +18,14 @@ struct ContentView: View {
 
     var body: some View {
         VStack(spacing: 30) {
+            // Displays the current number
             Text("\(number)")
                 .font(.custom("Helvetica Neue", size: 80))
                 .fontWeight(.bold)
                 .padding()
             
             HStack(spacing: 20) {
+                // Button for Prime answer
                 Button("Prime") {
                     evaluateAnswer(isPrime: true)
                 }
@@ -33,6 +35,7 @@ struct ContentView: View {
                 .cornerRadius(20)
                 .shadow(radius: 10)
 
+                // Button for Not Prime answer
                 Button("Not Prime") {
                     evaluateAnswer(isPrime: false)
                 }
@@ -45,6 +48,7 @@ struct ContentView: View {
             .font(.title)
             .padding()
             
+            // Shows a check or X based on answer
             if let isCorrect = isCorrect {
                 Image(systemName: isCorrect ? "checkmark.circle.fill" : "x.circle.fill")
                     .foregroundColor(isCorrect ? .green : .red)
@@ -52,37 +56,39 @@ struct ContentView: View {
             }
         }
         .onAppear {
-            startTimer()
+            startTimer()  // Starts the timer when the view appears
         }
         .alert("Results", isPresented: $showDialog) {
+            // Resets the counters when the dialog is dismissed
             Button("OK") {
-            
                 correctAnswers = 0
                 wrongAnswers = 0
                 attempts = 0
             }
         } message: {
-            Text("Correct: \(correctAnswers)\nWrong: \(wrongAnswers)")
+            Text("Correct: \(correctAnswers)\nWrong: \(wrongAnswers)")  // Displays the score
         }
     }
 
+    // Evaluates the answer based on whether the number is prime or not
     func evaluateAnswer(isPrime: Bool) {
         isCorrect = isPrimeNumber(number) == isPrime
 
         if isCorrect == true {
-            correctAnswers += 1
+            correctAnswers += 1  // Increases correct answers if the answer is correct
         } else {
-            wrongAnswers += 1
+            wrongAnswers += 1  // Increases wrong answers if the answer is incorrect
         }
 
-        attempts += 1
+        attempts += 1  // Increments the attempt count
         if attempts == 10 {
-            showDialog = true
+            showDialog = true  // Shows the results after 10 attempts
         }
 
-        resetNumber()
+        resetNumber()  // Resets the number for the next question
     }
 
+    // Checks if the number is prime
     func isPrimeNumber(_ num: Int) -> Bool {
         if num < 2 { return false }
         if num == 2 || num == 3 { return true }
@@ -90,27 +96,30 @@ struct ContentView: View {
         
         for i in stride(from: 3, through: Int(Double(num).squareRoot()), by: 2) {
             if num % i == 0 {
-                return false
+                return false  // Returns false if any divisor is found
             }
         }
-        return true
+        return true  // Returns true if no divisor is found
     }
 
+    // Resets the current number to a new random value
     func resetNumber() {
         number = Int.random(in: 1...100)
         startTimer()
     }
 
+    // Starts a 5-second timer to reset the number if the user doesn't answer in time
     func startTimer() {
-        timer?.invalidate()
+        timer?.invalidate()  
         timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { _ in
-            wrongAnswers += 1
+            wrongAnswers += 1  // Increments wrong answers if no answer is provided within the time limit
             isCorrect = false
-            resetNumber()
+            resetNumber()  // Resets the number after the timer expires
         }
     }
 }
 
+// Preview for SwiftUI
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()

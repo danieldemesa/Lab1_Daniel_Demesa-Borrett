@@ -29,7 +29,7 @@ struct ContentView: View {
                 .frame(width: 150, height: 50)
                 .background(isCorrect == true ? Color.green : Color.blue)
                 .foregroundColor(.white)
-                .cornerRadius(10)
+                .cornerRadius(25) // Rounded corners for the buttons
 
                 Button("Not Prime") {
                     evaluateAnswer(isPrime: false)
@@ -37,7 +37,7 @@ struct ContentView: View {
                 .frame(width: 150, height: 50)
                 .background(isCorrect == false ? Color.orange : Color.red)
                 .foregroundColor(.white)
-                .cornerRadius(10)
+                .cornerRadius(25) // Rounded corners for the buttons
             }
             .font(.title)
             .padding()
@@ -92,11 +92,11 @@ struct ContentView: View {
 
     func resetNumber() {
         number = Int.random(in: 1...100)
-        startTimer()  // Restart timer each time a number resets
+        startTimer()
     }
 
     func startTimer() {
-        timer?.invalidate()  // Stop any previous timer before starting a new one
+        timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { _ in
             wrongAnswers += 1
             isCorrect = false

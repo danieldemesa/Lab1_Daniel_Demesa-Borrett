@@ -17,29 +17,29 @@ struct ContentView: View {
     @State private var timer: Timer?
 
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 30) {
             Text("\(number)")
                 .font(.custom("Helvetica Neue", size: 80))
                 .fontWeight(.bold)
                 .padding()
             
-            HStack {
+            HStack(spacing: 20) {
                 Button("Prime") {
                     evaluateAnswer(isPrime: true)
                 }
-                .frame(width: 150, height: 50)
+                .frame(width: 160, height: 60)
                 .background(isCorrect == true ? Color.green : Color.blue)
                 .foregroundColor(.white)
-                .cornerRadius(25)
+                .cornerRadius(20)
                 .shadow(radius: 10)
 
                 Button("Not Prime") {
                     evaluateAnswer(isPrime: false)
                 }
-                .frame(width: 150, height: 50)
+                .frame(width: 160, height: 60)
                 .background(isCorrect == false ? Color.orange : Color.red)
                 .foregroundColor(.white)
-                .cornerRadius(25)
+                .cornerRadius(20)
                 .shadow(radius: 10)
             }
             .font(.title)
